@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tkecommerce/config/app_router.dart';
 import 'package:tkecommerce/firebase_options.dart';
+import 'package:tkecommerce/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,15 +19,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TKECOMMERCe',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      theme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
+      title: 'TKECOMMERCE',
+      initialRoute: HomeScreen.routeName,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }
