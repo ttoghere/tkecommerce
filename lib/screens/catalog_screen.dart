@@ -1,16 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:tkecommerce/models/models.dart';
+import 'package:tkecommerce/screens/screens_shelf.dart';
+import 'package:tkecommerce/widgets/widgets_shelf.dart';
 
 class CatalogScreen extends StatelessWidget {
   static const routeName = "/catalog";
-  const CatalogScreen({super.key});  static Route route() {
+  final Category category;
+  const CatalogScreen({super.key, required this.category});
+  static Route route({required Category category}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => const CatalogScreen(),
+      builder: (context) => CatalogScreen(category: category),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final List<Product> categoryProducts = Product.products
+        .where((element) => element.category == category.name)
+        .toList();
+    return Scaffold(
+      appBar: const CustomAppBar(
+        title: "Category",
+      ),
+      bottomNavigationBar: const CustomNavBar(screen: routeName),
+      body: GridView.builder(
+        itemCount: 3,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 16,
+        ),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, childAspectRatio: 1.15),
+        itemBuilder: (context, index) {
+          //Item template for Catalog Screen
+          return Container(
+            alignment: Alignment.center,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            child: ProductCard(
+              product: categoryProducts[index],
+              widthFactor: 2.2,
+            ),
+          );
+        },
+      ),
+    );
   }
 }
