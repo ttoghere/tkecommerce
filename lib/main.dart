@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tkecommerce/blocs/cart/cart_bloc.dart';
-import 'package:tkecommerce/blocs/wishlist/wishlist_bloc.dart';
-import 'package:tkecommerce/config/app_router.dart';
+import 'package:tkecommerce/blocs/blocs_shelf.dart';
+import 'package:tkecommerce/config/config_shelf.dart';
 import 'package:tkecommerce/firebase_options.dart';
 import 'package:tkecommerce/observer/bloc_observer.dart';
+import 'package:tkecommerce/repositories/repositories.dart';
 import 'package:tkecommerce/screens/screens_shelf.dart';
 
 void main() async {
@@ -32,6 +32,26 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CartBloc()..add(LoadCart()),
+        ),
+        BlocProvider(
+          create: (context) => CategoryBloc(
+            categoryRepository: CategoryRepository(),
+          )..add(
+              LoadCategories(),
+            ),
+        ),
+        BlocProvider(
+          create: (context) =>
+              ProductBloc(productRepository: ProductRepository())
+                ..add(
+                  LoadProducts(),
+                ),
+        ),
+        BlocProvider(
+          create: (context) => CheckoutBloc(
+            cartBloc: context.read<CartBloc>(),
+            checkoutRepository: CheckoutRepository(),
+          ),
         ),
       ],
       child: MaterialApp(

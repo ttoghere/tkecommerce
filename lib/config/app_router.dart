@@ -1,8 +1,9 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:tkecommerce/models/category_model.dart';
 import 'package:tkecommerce/models/product_model.dart';
-import '../screens/screens_shelf.dart';
+import 'package:tkecommerce/screens/screens_shelf.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {

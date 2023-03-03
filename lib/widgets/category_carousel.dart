@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:tkecommerce/models/models.dart';
 import 'package:tkecommerce/widgets/widgets_shelf.dart';
-import '../models/models.dart';
 
 
 class CategoryCarousel extends StatelessWidget {

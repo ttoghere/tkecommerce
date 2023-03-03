@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tkecommerce/blocs/cart/cart_bloc.dart';
-import 'package:tkecommerce/config/consts.dart';
+import 'package:tkecommerce/blocs/blocs_shelf.dart';
+import 'package:tkecommerce/config/config_shelf.dart';
 import 'package:tkecommerce/models/models.dart';
 import 'package:tkecommerce/screens/screens_shelf.dart';
 

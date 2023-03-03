@@ -1,12 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tkecommerce/blocs/cart/cart_bloc.dart';
-import 'package:tkecommerce/models/models.dart';
-
-import 'package:tkecommerce/models/product_model.dart';
-import 'package:tkecommerce/screens/home_screen.dart';
-import 'package:tkecommerce/widgets/custom_app_bar.dart';
+import 'package:tkecommerce/blocs/blocs_shelf.dart';
+import 'package:tkecommerce/screens/screens_shelf.dart';
 import 'package:tkecommerce/widgets/widgets_shelf.dart';
 
 class CartScreen extends StatelessWidget {
@@ -40,171 +35,16 @@ class CartScreen extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              state.cart.freeDeliveryString,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(fontSize: 13),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed(HomeScreen.routeName);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red[900],
-                              ),
-                              child: Text(
-                                "Add More Items",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(fontSize: 14),
-                              ),
-                            ),
-                          ],
-                        ),
+                        //Cart Screen Top Row
+                        cartScreenTopRow(state, context),
                         const SizedBox(
                           height: 10,
                         ),
-                        SizedBox(
-                          height: 400,
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: state.cart
-                                  .productQuantity(state.cart.products)
-                                  .keys
-                                  .length,
-                              itemBuilder: (context, index) {
-                                return CartProductCard(
-                                  product: state.cart
-                                      .productQuantity(state.cart.products)
-                                      .keys
-                                      .elementAt(index),
-                                  quantity: state.cart
-                                      .productQuantity(state.cart.products)
-                                      .values
-                                      .elementAt(index),
-                                );
-                              }),
-                        ),
+                        //Cart Screen Product List
+                        cartScreenProductList(state),
                       ],
                     ),
-                    Column(
-                      children: [
-                        const Divider(
-                          thickness: 2,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 10),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Subtotal:",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    "\$${state.cart.subtotalString}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Delivery Fee:",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    "\$${state.cart.deliveryFeeString}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Stack(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: Colors.red.withAlpha(50),
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.all(5),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 35),
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.red[900],
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Total:",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    "\$${state.cart.totalString}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                    const OrderSummary(),
                   ],
                 ),
               ),
@@ -216,6 +56,56 @@ class CartScreen extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  SizedBox cartScreenProductList(CartLoaded state) {
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount:
+              state.cart.productQuantity(state.cart.products).keys.length,
+          itemBuilder: (context, index) {
+            return CartProductCard(
+              product: state.cart
+                  .productQuantity(state.cart.products)
+                  .keys
+                  .elementAt(index),
+              quantity: state.cart
+                  .productQuantity(state.cart.products)
+                  .values
+                  .elementAt(index),
+            );
+          }),
+    );
+  }
+
+  Row cartScreenTopRow(CartLoaded state, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          state.cart.freeDeliveryString,
+          style:
+              Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 13),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed(HomeScreen.routeName);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red[900],
+          ),
+          child: Text(
+            "Add More Items",
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(fontSize: 14),
+          ),
+        ),
+      ],
     );
   }
 }
