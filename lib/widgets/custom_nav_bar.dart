@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/blocs/wishlist/wishlist_bloc.dart';
+import 'package:tkecommerce/config/consts.dart';
 import 'package:tkecommerce/screens/screens_shelf.dart';
+import 'package:tkecommerce/widgets/gradient_text.dart';
 
 class CustomNavBar extends StatelessWidget {
   final String screen;
@@ -102,19 +104,36 @@ class CustomNavBar extends StatelessWidget {
 
   List<Widget> _buildGoToCheckoutNavBar(context) {
     return [
-      ElevatedButton(
+      OutlinedButton(
         onPressed: () {
           Navigator.pushNamed(context, CheckoutScreen.routeName);
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          shape: const RoundedRectangleBorder(),
+        style: OutlinedButton.styleFrom(
+          shadowColor: Colors.white,
+          backgroundColor: Colors.grey[900],
+          side: const BorderSide(
+            width: 2,
+            color: Colors.white,
+          ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                20,
+              ),
+            ),
+          ),
         ),
-        child: Text(
-          'GO TO CHECKOUT',
-          style: Theme.of(context).textTheme.headlineMedium,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GradientText(
+            "Go To Checkout",
+            gradient: appGradient,
+            style: const TextStyle(
+              fontSize: 25,
+            ),
+          ),
         ),
-      )
+      ),
     ];
   }
 }

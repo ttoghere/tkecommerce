@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/blocs/blocs_shelf.dart';
+import 'package:tkecommerce/blocs/cart/cart_bloc.dart';
 import 'package:tkecommerce/config/consts.dart';
 import 'package:tkecommerce/models/product_model.dart';
+import 'package:tkecommerce/screens/screens_shelf.dart';
 import 'package:tkecommerce/widgets/widgets_shelf.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -50,17 +52,24 @@ class ProductScreen extends StatelessWidget {
               );
             },
           ),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue[900],
-            ),
-            child: Text(
-              "Add To Cart",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    fontSize: 15,
-                  ),
-            ),
+          BlocBuilder<CartBloc, CartState>(
+            builder: (context, state) {
+              return ElevatedButton(
+                onPressed: () {
+                  context.read<CartBloc>().add(AddProduct(product));
+                  Navigator.of(context).pushNamed(CartScreen.routeName);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[900],
+                ),
+                child: Text(
+                  "Add To Cart",
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        fontSize: 15,
+                      ),
+                ),
+              );
+            },
           ),
         ],
       ),

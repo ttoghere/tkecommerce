@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tkecommerce/blocs/cart/cart_bloc.dart';
 import 'package:tkecommerce/blocs/wishlist/wishlist_bloc.dart';
 import 'package:tkecommerce/config/app_router.dart';
 import 'package:tkecommerce/firebase_options.dart';
+import 'package:tkecommerce/screens/cart_screen.dart';
 import 'package:tkecommerce/screens/home_screen.dart';
+import 'package:tkecommerce/screens/screens_shelf.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,12 +30,15 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => WishlistBloc()..add(StartWishlist()),
         ),
+        BlocProvider(
+          create: (context) => CartBloc()..add(LoadCart()),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         title: 'TKECOMMERCE',
-        initialRoute: HomeScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         onGenerateRoute: AppRouter.onGenerateRoute,
       ),
     );

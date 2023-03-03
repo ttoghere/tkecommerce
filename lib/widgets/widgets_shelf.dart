@@ -6,3 +6,4 @@ export 'section_tite.dart';
 export 'product_card.dart';
 export 'category_carousel.dart';
 export 'product_carousel.dart';
+export 'cart_product_card.dart';

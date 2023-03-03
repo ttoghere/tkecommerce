@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tkecommerce/blocs/cart/cart_bloc.dart';
 import 'package:tkecommerce/config/consts.dart';
 import 'package:tkecommerce/models/models.dart';
 import 'package:tkecommerce/screens/screens_shelf.dart';
@@ -97,24 +99,58 @@ class ProductCard extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.add_circle,
-            ),
-          ),
-        ),
-        isWishlist
-            ? Expanded(
+        BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            if (state is CartLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is CartLoaded) {
+              return Expanded(
                 flex: 1,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<CartBloc>().add(AddProduct(product));
+                  },
                   icon: const Icon(
-                    Icons.delete,
+                    Icons.add_circle,
                   ),
                 ),
+              );
+            } else {
+              return const Center(
+                child: Text("Something Went Wrong"),
+              );
+            }
+          },
+        ),
+        isWishlist
+            ? BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  if (state is CartLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is CartLoaded) {
+                    return Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: () {
+                          context.read<CartBloc>().add(RemoveProduct(product));
+                        },
+                        icon: const Icon(
+                          Icons.delete,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text("Something Went Wrong"),
+                    );
+                  }
+                },
               )
             : const SizedBox(),
       ],
