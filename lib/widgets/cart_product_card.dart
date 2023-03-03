@@ -5,9 +5,11 @@ import 'package:tkecommerce/models/models.dart';
 
 class CartProductCard extends StatelessWidget {
   final Product product;
+  final int quantity;
   const CartProductCard({
     Key? key,
     required this.product,
+    required this.quantity,
   }) : super(key: key);
 
   @override
@@ -59,7 +61,7 @@ class CartProductCard extends StatelessWidget {
                     },
                     icon: const Icon(Icons.add_circle),
                   ),
-                  const Text("0"),
+                  Text("$quantity"),
                   IconButton(
                     onPressed: () {
                       context.read<CartBloc>().add(RemoveProduct(product));

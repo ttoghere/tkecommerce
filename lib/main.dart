@@ -5,8 +5,7 @@ import 'package:tkecommerce/blocs/cart/cart_bloc.dart';
 import 'package:tkecommerce/blocs/wishlist/wishlist_bloc.dart';
 import 'package:tkecommerce/config/app_router.dart';
 import 'package:tkecommerce/firebase_options.dart';
-import 'package:tkecommerce/screens/cart_screen.dart';
-import 'package:tkecommerce/screens/home_screen.dart';
+import 'package:tkecommerce/observer/bloc_observer.dart';
 import 'package:tkecommerce/screens/screens_shelf.dart';
 
 void main() async {
@@ -15,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
 
