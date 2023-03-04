@@ -1,7 +1,7 @@
 {
     "provider": "apple_pay",
     "data": {
-      "merchantIdentifier": "merchant.tunckankilic.site.blocecommerce",
+      "merchantIdentifier": "merchant.site.tunckankilic.tkecommerce",
       "displayName": "Ismail Tunç Kankılıç",
       "merchantCapabilities": ["3DS", "debit", "credit"],
       "supportedNetworks": ["amex", "visa", "discover", "masterCard"],

@@ -5,6 +5,7 @@ import 'package:tkecommerce/screens/screens_shelf.dart';
 import 'package:tkecommerce/widgets/gradient_text.dart';
 
 import '../blocs/blocs_shelf.dart';
+import 'widgets_shelf.dart';
 
 class CustomNavBar extends StatelessWidget {
   final String screen;
@@ -47,45 +48,30 @@ class CustomNavBar extends StatelessWidget {
         return _buildGoToOrderNavBar(context);
       case OrderConfirmationScreen.routeName:
         return _buildOrderConfirmation(context);
+      case PaymentSelectScreen.routeName:
+        return _buildPayMethodPick(context);
     }
     return _buildNavBar(context);
   }
 
   List<Widget> _buildGoToOrderNavBar(context) {
     return [
-      BlocBuilder<CheckoutBloc, CheckoutState>(
-        builder: (context, state) {
-          if (state is CheckoutLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is CheckoutLoaded) {
-            return ElevatedButton(
-              onPressed: () {
-                context
-                    .read<CheckoutBloc>()
-                    .add(ConfirmCheckout(checkout: state.checkout));
-                Navigator.of(context)
-                    .pushNamed(OrderConfirmationScreen.routeName);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[900],
-              ),
-              child: Text(
-                "Order Now ",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      fontSize: 15,
-                    ),
-              ),
-            );
-          } else {
-            return const Center(
-              child: Text("Something Went Wrong"),
-            );
-          }
-        },
-      ),
+     BlocBuilder<CheckoutBloc, CheckoutState>(
+          builder: (context, state) {
+            if (state is CheckoutLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is CheckoutLoaded) {
+              return ApplePay(
+                products: state.products!,
+                total: state.total!,
+              );
+            } else {
+              return const Center(child: Text("Something is wrong"));
+            }
+          },
+        )
     ];
   }
 
@@ -209,6 +195,45 @@ class CustomNavBar extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    ];
+  }
+
+  List<Widget>? _buildPayMethodPick(context) {
+    return [
+      BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          if (state is CheckoutLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is CheckoutLoaded) {
+            // ApplePay();
+            return ElevatedButton(
+              onPressed: () {
+                context
+                    .read<CheckoutBloc>()
+                    .add(ConfirmCheckout(checkout: state.checkout));
+                Navigator.of(context)
+                    .pushNamed(OrderConfirmationScreen.routeName);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue[900],
+              ),
+              child: Text(
+                "Order Now ",
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontSize: 15,
+                    ),
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text("Something Went Wrong"),
+            );
+          }
+        },
       ),
     ];
   }
