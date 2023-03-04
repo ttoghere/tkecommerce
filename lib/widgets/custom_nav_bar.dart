@@ -45,6 +45,8 @@ class CustomNavBar extends StatelessWidget {
         return _buildGoToCheckoutNavBar(context);
       case CheckoutScreen.routeName:
         return _buildGoToOrderNavBar(context);
+      case OrderConfirmationScreen.routeName:
+        return _buildOrderConfirmation(context);
     }
     return _buildNavBar(context);
   }
@@ -64,6 +66,8 @@ class CustomNavBar extends StatelessWidget {
                 context
                     .read<CheckoutBloc>()
                     .add(ConfirmCheckout(checkout: state.checkout));
+                Navigator.of(context)
+                    .pushNamed(OrderConfirmationScreen.routeName);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue[900],
@@ -164,6 +168,41 @@ class CustomNavBar extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: GradientText(
             "Go To Checkout",
+            gradient: appGradient,
+            style: const TextStyle(
+              fontSize: 25,
+            ),
+          ),
+        ),
+      ),
+    ];
+  }
+
+  List<Widget>? _buildOrderConfirmation(context) {
+    return [
+      ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, HomeScreen.routeName);
+        },
+        style: ElevatedButton.styleFrom(
+          shadowColor: Colors.white,
+          backgroundColor: Colors.grey[900],
+          side: const BorderSide(
+            width: 2,
+            color: Colors.white,
+          ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                20,
+              ),
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GradientText(
+            "Go To Shopping",
             gradient: appGradient,
             style: const TextStyle(
               fontSize: 25,
