@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/config/consts.dart';
 import 'package:tkecommerce/screens/screens_shelf.dart';
 import 'package:tkecommerce/widgets/gradient_text.dart';
+import 'package:pay/pay.dart' as pay;
 
 import '../blocs/blocs_shelf.dart';
 import 'widgets_shelf.dart';
@@ -56,22 +59,36 @@ class CustomNavBar extends StatelessWidget {
 
   List<Widget> _buildGoToOrderNavBar(context) {
     return [
-     BlocBuilder<CheckoutBloc, CheckoutState>(
-          builder: (context, state) {
-            if (state is CheckoutLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is CheckoutLoaded) {
+      BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          if (state is CheckoutLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is CheckoutLoaded) {
+            if (Platform.isIOS) {
               return ApplePay(
                 products: state.products!,
                 total: state.total!,
               );
-            } else {
-              return const Center(child: Text("Something is wrong"));
             }
-          },
-        )
+            if (Platform.isAndroid) {
+              return GooglePay(
+                products: state.products!,
+                total: state.total!,
+              );
+            } else {
+              return ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, PaymentSelectScreen.routeName);
+                  },
+                  child: Text("Payment Selection"));
+            }
+          } else {
+            return const Center(child: Text("Something is wrong"));
+          }
+        },
+      )
     ];
   }
 

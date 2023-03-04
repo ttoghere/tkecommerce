@@ -37,6 +37,8 @@ class ApplePay extends StatelessWidget {
         onPaymentResult: onApplePayResult,
         paymentItems: _paymentItems,
         paymentConfigurationAsset: "payment_profile_apple_pay.json",
+        margin: const EdgeInsets.only(top: 10),
+        loadingIndicator: const CircularProgressIndicator(),
       ),
     );
   }

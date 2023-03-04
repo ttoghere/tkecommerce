@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
 import 'package:tkecommerce/widgets/widgets_shelf.dart';
@@ -33,25 +35,37 @@ class PaymentSelectScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                RawGooglePayButton(
-                  type: GooglePayButtonType.pay,
-                  onPressed: () {
-                    log("Google Pay Selected");
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                RawApplePayButton(
-                  style: ApplePayButtonStyle.black,
-                  type: ApplePayButtonType.inStore,
-                  onPressed: () {
-                    log("Apple Pay Selected");
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                Platform.isAndroid
+                    ? Column(
+                        children: [
+                          RawGooglePayButton(
+                            type: GooglePayButtonType.pay,
+                            onPressed: () {
+                              log("Google Pay Selected");
+                            },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                Platform.isIOS
+                    ? Column(
+                        children: [
+                          RawApplePayButton(
+                            style: ApplePayButtonStyle.black,
+                            type: ApplePayButtonType.inStore,
+                            onPressed: () {
+                              log("Apple Pay Selected");
+                            },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
