@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tkecommerce/models/models.dart';
-import 'package:tkecommerce/screens/screens_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 
 class HeroCarouselCard extends StatelessWidget {

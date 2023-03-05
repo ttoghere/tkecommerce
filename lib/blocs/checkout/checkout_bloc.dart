@@ -3,9 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:tkecommerce/blocs/blocs_shelf.dart';
-import 'package:tkecommerce/models/models.dart';
-import 'package:tkecommerce/repositories/repositories.dart';
+import 'package:tkecommerce/app_shelf.dart';
+
 
 part 'checkout_event.dart';
 part 'checkout_state.dart';

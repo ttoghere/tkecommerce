@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:tkecommerce/models/models.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 class Cart extends Equatable {
   final List<Product> products;

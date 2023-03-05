@@ -2,13 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tkecommerce/config/consts.dart';
-import 'package:tkecommerce/screens/screens_shelf.dart';
-import 'package:tkecommerce/widgets/gradient_text.dart';
-import 'package:pay/pay.dart' as pay;
+import 'package:tkecommerce/app_shelf.dart';
 
-import '../blocs/blocs_shelf.dart';
-import 'widgets_shelf.dart';
 
 class CustomNavBar extends StatelessWidget {
   final String screen;

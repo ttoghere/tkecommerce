@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tkecommerce/blocs/checkout/checkout_bloc.dart';
-import 'package:tkecommerce/screens/order_confirmation_screen.dart';
-import 'package:tkecommerce/screens/payment_select_screen.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
+
 
 class CheckoutScreen extends StatelessWidget {
   static const routeName = "/checkout";

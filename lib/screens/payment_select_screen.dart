@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
 import 'dart:developer';
 
 class PaymentSelectScreen extends StatelessWidget {

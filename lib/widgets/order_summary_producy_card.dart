@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tkecommerce/models/models.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 class OrderSummaryProductCard extends StatelessWidget {
   final Product product;

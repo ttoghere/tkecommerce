@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tkecommerce/models/models.dart';
+import 'package:tkecommerce/app_shelf.dart';
 import 'package:tkecommerce/repositories/product/base_product_repository.dart';
 
 class ProductRepository extends BaseProductRepository {

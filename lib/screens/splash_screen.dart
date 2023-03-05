@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tkecommerce/config/config_shelf.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
+
 
 class SplashScreen extends StatelessWidget {
   static const String routeName = '/splash';

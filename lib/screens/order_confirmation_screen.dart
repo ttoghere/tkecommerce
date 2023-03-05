@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
-import 'package:tkecommerce/models/product_model.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
 
 class OrderConfirmationScreen extends StatelessWidget {
   static const routeName = "/orderconfirmation";
