@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/app_shelf.dart';
 
-
 class CustomNavBar extends StatelessWidget {
   final String screen;
 
@@ -47,7 +46,7 @@ class CustomNavBar extends StatelessWidget {
       case OrderConfirmationScreen.routeName:
         return _buildOrderConfirmation(context);
       case PaymentSelectScreen.routeName:
-        return _buildPayMethodPick(context);
+        return _buildGoToCheckoutNavBar(context);
     }
     return _buildNavBar(context);
   }
@@ -62,28 +61,39 @@ class CustomNavBar extends StatelessWidget {
             );
           } else if (state is CheckoutLoaded) {
             if (Platform.isIOS) {
-              return ApplePay(
-                products: state.products!,
-                total: state.total!,
-              );
+              switch (state.paymentMethod) {
+                case PaymentMethod.applePay:
+                  return ApplePay(
+                    products: state.products!,
+                    total: state.total!,
+                  );
+                case PaymentMethod.creditCard:
+                  return Container();
+                default:
+                  return ApplePay(
+                    products: state.products!,
+                    total: state.total!,
+                  );
+              }
             }
             if (Platform.isAndroid) {
-              try {
-                return GooglePay(
-                  products: state.products!,
-                  total: state.total!,
-                );
-              } catch (error) {
-                return AlertDialog(
-                  content: Text(error.toString()),
-                );
+              switch (state.paymentMethod) {
+                case PaymentMethod.googlePay:
+                  return GooglePay(
+                    products: state.products!,
+                    total: state.total!,
+                  );
+                case PaymentMethod.creditCard:
+                  return Container();
+                default:
+                  return GooglePay(
+                    products: state.products!,
+                    total: state.total!,
+                  );
               }
             } else {
               return ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, PaymentSelectScreen.routeName);
-                  },
-                  child: Text("Payment Selection"));
+                  onPressed: () {}, child: const Text("Payment Selection"));
             }
           } else {
             return const Center(child: Text("Something is wrong"));

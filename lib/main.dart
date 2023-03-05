@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/app_shelf.dart';
+import 'package:tkecommerce/blocs/payment/payment_bloc.dart';
 import 'package:tkecommerce/firebase_options.dart';
 import 'package:tkecommerce/observer/bloc_observer.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ void main() async {
     FlutterError.presentError(details);
     if (kReleaseMode) exit(1);
   };
-  
+
   runApp(const MyApp());
 }
 
@@ -33,10 +33,16 @@ class MyApp extends StatelessWidget {
       providers: [
         //Bloc Defination with Default Event
         BlocProvider(
-          create: (context) => WishlistBloc()..add(StartWishlist()),
+          create: (context) => WishlistBloc()
+            ..add(
+              StartWishlist(),
+            ),
         ),
         BlocProvider(
-          create: (context) => CartBloc()..add(LoadCart()),
+          create: (context) => CartBloc()
+            ..add(
+              LoadCart(),
+            ),
         ),
         BlocProvider(
           create: (context) => CategoryBloc(
@@ -46,14 +52,21 @@ class MyApp extends StatelessWidget {
             ),
         ),
         BlocProvider(
-          create: (context) =>
-              ProductBloc(productRepository: ProductRepository())
-                ..add(
-                  LoadProducts(),
-                ),
+          create: (context) => ProductBloc(
+            productRepository: ProductRepository(),
+          )..add(
+              LoadProducts(),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => PaymentBloc()
+            ..add(
+              LoadPaymentMethod(),
+            ),
         ),
         BlocProvider(
           create: (context) => CheckoutBloc(
+            paymentBloc: context.read<PaymentBloc>(),
             cartBloc: context.read<CartBloc>(),
             checkoutRepository: CheckoutRepository(),
           ),

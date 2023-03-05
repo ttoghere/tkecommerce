@@ -8,7 +8,7 @@ import 'package:tkecommerce/app_shelf.dart';
 class GooglePay extends StatelessWidget {
   final String total;
   final List<Product> products;
-  GooglePay({
+  const GooglePay({
     Key? key,
     required this.total,
     required this.products,
@@ -19,7 +19,7 @@ class GooglePay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _paymentItems = products
+    var paymentItems = products
         .map(
           (e) => PaymentItem(
             amount: e.price.toString(),
@@ -29,13 +29,13 @@ class GooglePay extends StatelessWidget {
           ),
         )
         .toList();
-    _paymentItems.add(PaymentItem(amount: total, label: "Total"));
+    paymentItems.add(PaymentItem(amount: total, label: "Total"));
 
     return SizedBox(
       width: MediaQuery.of(context).size.width - 50,
       child: GooglePayButton(
         onPaymentResult: onGooglePayResult,
-        paymentItems: _paymentItems,
+        paymentItems: paymentItems,
         paymentConfigurationAsset: "payment_profile_google_pay.json",
         margin: const EdgeInsets.only(top: 10),
         loadingIndicator: const CircularProgressIndicator(),
