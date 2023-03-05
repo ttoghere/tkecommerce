@@ -22,6 +22,7 @@ void main() async {
     FlutterError.presentError(details);
     if (kReleaseMode) exit(1);
   };
+  
   runApp(const MyApp());
 }
 

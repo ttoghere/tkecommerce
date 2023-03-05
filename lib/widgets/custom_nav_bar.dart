@@ -73,10 +73,16 @@ class CustomNavBar extends StatelessWidget {
               );
             }
             if (Platform.isAndroid) {
-              return GooglePay(
-                products: state.products!,
-                total: state.total!,
-              );
+              try {
+                return GooglePay(
+                  products: state.products!,
+                  total: state.total!,
+                );
+              } catch (error) {
+                return AlertDialog(
+                  content: Text(error.toString()),
+                );
+              }
             } else {
               return ElevatedButton(
                   onPressed: () {
