@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tkecommerce/app_shelf.dart';
 
-
 class CatalogScreen extends StatelessWidget {
   static const routeName = "/catalog";
   final Category category;
@@ -35,10 +34,9 @@ class CatalogScreen extends StatelessWidget {
           //Item template for Catalog Screen
           return Container(
             alignment: Alignment.center,
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            child: ProductCard(
+            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            child: ProductCard.catalog(
               product: categoryProducts[index],
-              widthFactor: 2.2,
             ),
           );
         },

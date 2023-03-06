@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:tkecommerce/app_shelf.dart';
 
-
 class OrderConfirmationScreen extends StatelessWidget {
   static const routeName = "/orderconfirmation";
   const OrderConfirmationScreen({super.key});
@@ -117,12 +116,12 @@ class OrderConfirmationScreen extends StatelessWidget {
               height: 5,
             ),
             ListView.builder(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: Product.products.length,
               itemBuilder: (context, index) {
-                return OrderSummaryProductCard(
+                return ProductCard.summary(
                   quantity: index,
                   product: Product.products[index],
                 );

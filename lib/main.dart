@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         title: 'TKECOMMERCE',
-        initialRoute: HomeScreen.routeName,
+        initialRoute: OrderConfirmationScreen.routeName,
         onGenerateRoute: AppRouter.onGenerateRoute,
       ),
     );
