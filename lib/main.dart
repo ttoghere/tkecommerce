@@ -3,10 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tkecommerce/app_shelf.dart';
-import 'package:tkecommerce/blocs/payment/payment_bloc.dart';
 import 'package:tkecommerce/firebase_options.dart';
 import 'package:tkecommerce/observer/bloc_observer.dart';
+import 'package:tkecommerce/repositories/local_storage/local_storage_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +15,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.initFlutter();
+  Hive.registerAdapter(ProductAdapter());
   Bloc.observer = SimpleBlocObserver();
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
@@ -33,8 +36,9 @@ class MyApp extends StatelessWidget {
       providers: [
         //Bloc Defination with Default Event
         BlocProvider(
-          create: (context) => WishlistBloc()
-            ..add(
+          create: (context) => WishlistBloc(
+            localStorageRepository: LocalStorageRepository(),
+          )..add(
               StartWishlist(),
             ),
         ),
@@ -76,7 +80,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         title: 'TKECOMMERCE',
-        initialRoute: OrderConfirmationScreen.routeName,
+        initialRoute: HomeScreen.routeName,
         onGenerateRoute: AppRouter.onGenerateRoute,
       ),
     );

@@ -82,13 +82,6 @@ class OrderConfirmationScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "Order Code: #123-a12a",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
                 ],
               ),
             ),
