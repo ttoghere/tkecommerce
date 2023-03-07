@@ -2,23 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:tkecommerce/app_shelf.dart';
 
 class Checkout extends Equatable {
-  final String? fullName;
-  final String? email;
-  final String? city;
-  final String? address;
-  final String? country;
-  final String? zipCode;
+  final User? user;
   final List<Product>? products;
   final String? subtotal;
   final String? deliveryFee;
   final String? total;
   const Checkout({
-    this.fullName,
-    this.email,
-    this.city,
-    this.address,
-    this.country,
-    this.zipCode,
+    this.user,
     this.products,
     this.subtotal,
     this.deliveryFee,
@@ -27,12 +17,7 @@ class Checkout extends Equatable {
 
   @override
   List<Object?> get props => [
-        fullName,
-        email,
-        city,
-        address,
-        country,
-        zipCode,
+        user,
         products,
         subtotal,
         deliveryFee,
@@ -40,16 +25,8 @@ class Checkout extends Equatable {
       ];
 
   Map<String, Object> toDocument() {
-    Map<String, Object> customerAddress = {};
-    customerAddress["address"] = address!;
-    customerAddress["city"] = city!;
-    customerAddress["country"] = country!;
-    customerAddress["zipCode"] = zipCode!;
-
     return {
-      "customerAddress": customerAddress,
-      "customerName": fullName!,
-      "customerEmail": email!,
+      "user": user?.toDocument() ?? User.empty.toDocument(),
       "products": products!.map((e) => e.name).toList(),
       "subtotal": subtotal!,
       "deliveryFee": deliveryFee!,

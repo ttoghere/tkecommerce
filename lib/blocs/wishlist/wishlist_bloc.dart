@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:tkecommerce/app_shelf.dart';
-import 'package:tkecommerce/repositories/local_storage/local_storage_repository.dart';
 
 part 'wishlist_event.dart';
 part 'wishlist_state.dart';

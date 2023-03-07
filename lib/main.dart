@@ -5,15 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tkecommerce/app_shelf.dart';
-import 'package:tkecommerce/blocs/auth/auth_bloc.dart';
 import 'package:tkecommerce/blocs/profile/profile_bloc.dart';
 import 'package:tkecommerce/cubits/sign_in/sign_in_cubit.dart';
 import 'package:tkecommerce/cubits/sign_up/sign_up_cubit.dart';
 import 'package:tkecommerce/firebase_options.dart';
 import 'package:tkecommerce/observer/bloc_observer.dart';
-import 'package:tkecommerce/repositories/auth/auth_repository.dart';
-import 'package:tkecommerce/repositories/local_storage/local_storage_repository.dart';
-import 'package:tkecommerce/repositories/user/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +27,8 @@ void main() async {
 
   runApp(const MyApp());
 }
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -106,10 +104,10 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => CheckoutBloc(
-              paymentBloc: context.read<PaymentBloc>(),
-              cartBloc: context.read<CartBloc>(),
-              checkoutRepository: context.read<CheckoutRepository>(),
-            ),
+                paymentBloc: context.read<PaymentBloc>(),
+                cartBloc: context.read<CartBloc>(),
+                checkoutRepository: context.read<CheckoutRepository>(),
+                authBloc: context.read<AuthBloc>()),
           ),
           BlocProvider(
             create: (context) => ProfileBloc(
@@ -136,10 +134,11 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           theme: ThemeData.dark(),
           debugShowCheckedModeBanner: false,
           title: 'TKECOMMERCE',
-          initialRoute: HomeScreen.routeName,
+          initialRoute: SplashScreen.routeName,
           onGenerateRoute: AppRouter.onGenerateRoute,
         ),
       ),

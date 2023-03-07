@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/app_shelf.dart';
@@ -12,6 +13,17 @@ class LoginScreen extends StatelessWidget {
       builder: (context) => const LoginScreen(),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return const LoginWidget();
+  }
+}
+
+class LoginWidget extends StatelessWidget {
+  const LoginWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +45,7 @@ class LoginScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  context.read<SignInCubit>().loginWithCredentials().then(
-                      (value) => Navigator.of(context)
-                          .pushNamed(HomeScreen.routeName));
+                  context.read<SignInCubit>().loginWithCredentials(context);
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

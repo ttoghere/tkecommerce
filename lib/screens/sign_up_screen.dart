@@ -24,82 +24,84 @@ class SignUpScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: BlocBuilder<SignUpCubit, SignUpState>(
             builder: (context, state) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _UserInput(
-                    onChanged: (value) {
-                      context
-                          .read<SignUpCubit>()
-                          .userChanged(state.user!.copyWith(email: value));
-                    },
-                    labelText: "Email",
-                  ),
-                  _UserInput(
-                    onChanged: (value) {
-                      context
-                          .read<SignUpCubit>()
-                          .userChanged(state.user!.copyWith(fullName: value));
-                    },
-                    labelText: "Full Name",
-                  ),
-                  _UserInput(
-                    onChanged: (value) {
-                      context
-                          .read<SignUpCubit>()
-                          .userChanged(state.user!.copyWith(country: value));
-                    },
-                    labelText: "Country",
-                  ),
-                  _UserInput(
-                    onChanged: (value) {
-                      context
-                          .read<SignUpCubit>()
-                          .userChanged(state.user!.copyWith(city: value));
-                    },
-                    labelText: "City",
-                  ),
-                  _UserInput(
-                    onChanged: (value) {
-                      context
-                          .read<SignUpCubit>()
-                          .userChanged(state.user!.copyWith(address: value));
-                    },
-                    labelText: "Address",
-                  ),
-                  _UserInput(
-                    onChanged: (value) {
-                      context
-                          .read<SignUpCubit>()
-                          .userChanged(state.user!.copyWith(zipCode: value));
-                    },
-                    labelText: "Zip Code",
-                  ),
-                  _PasswordInput(),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<SignUpCubit>().signUpWithCredentials();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      backgroundColor: Colors.blue,
-                      fixedSize: const Size(200, 50),
-                    ),
-                    child: Text(
-                      "Sign Up",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(fontSize: 20),
-                    ),
-                  ),
-                ],
-              );
+              return signUpForm(context, state);
             },
           ),
         ),
       ),
+    );
+  }
+
+  Column signUpForm(BuildContext context, SignUpState state) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _UserInput(
+          onChanged: (value) {
+            context
+                .read<SignUpCubit>()
+                .userChanged(state.user!.copyWith(email: value));
+          },
+          labelText: "Email",
+        ),
+        _UserInput(
+          onChanged: (value) {
+            context
+                .read<SignUpCubit>()
+                .userChanged(state.user!.copyWith(fullName: value));
+          },
+          labelText: "Full Name",
+        ),
+        _UserInput(
+          onChanged: (value) {
+            context
+                .read<SignUpCubit>()
+                .userChanged(state.user!.copyWith(country: value));
+          },
+          labelText: "Country",
+        ),
+        _UserInput(
+          onChanged: (value) {
+            context
+                .read<SignUpCubit>()
+                .userChanged(state.user!.copyWith(city: value));
+          },
+          labelText: "City",
+        ),
+        _UserInput(
+          onChanged: (value) {
+            context
+                .read<SignUpCubit>()
+                .userChanged(state.user!.copyWith(address: value));
+          },
+          labelText: "Address",
+        ),
+        _UserInput(
+          onChanged: (value) {
+            context
+                .read<SignUpCubit>()
+                .userChanged(state.user!.copyWith(zipCode: value));
+          },
+          labelText: "Zip Code",
+        ),
+        _PasswordInput(),
+        ElevatedButton(
+          onPressed: () {
+            context.read<SignUpCubit>().signUpWithCredentials();
+          },
+          style: ElevatedButton.styleFrom(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            backgroundColor: Colors.blue,
+            fixedSize: const Size(200, 50),
+          ),
+          child: Text(
+            "Sign Up",
+            style:
+                Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -141,7 +143,7 @@ class _PasswordInput extends StatelessWidget {
           children: [
             TextField(
               obscureText: true,
-              decoration: InputDecoration(labelText: "Password"),
+              decoration: const InputDecoration(labelText: "Password"),
               onChanged: (password) {
                 context.read<SignUpCubit>().passwordChanged(password);
               },

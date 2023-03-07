@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/app_shelf.dart';
-import 'package:tkecommerce/blocs/auth/auth_bloc.dart';
 
 class SplashScreen extends StatelessWidget {
   static const String routeName = '/splash';
@@ -19,7 +18,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 2), () => Navigator.pushReplacementNamed(context, '/'));
+    Timer(const Duration(seconds: 2),
+        () => Navigator.pushReplacementNamed(context, HomeScreen.routeName));
 
     return BlocListener<AuthBloc, AuthState>(
       listenWhen: (previous, current) => previous.authUser != current.authUser,

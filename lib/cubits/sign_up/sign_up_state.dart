@@ -8,7 +8,7 @@ class SignUpState extends Equatable {
   final SignUpStatus status;
   final auth.User? authUser;
   final User? user;
-  SignUpState({
+  const SignUpState({
     required this.password,
     required this.status,
     this.authUser,
@@ -38,11 +38,11 @@ class SignUpState extends Equatable {
   bool get stringify => true;
 
   factory SignUpState.initial() {
-    return SignUpState(
+    return const SignUpState(
       password: "",
       status: SignUpStatus.initial,
       authUser: null,
-      user: const User(),
+      user: User(),
     );
   }
 }

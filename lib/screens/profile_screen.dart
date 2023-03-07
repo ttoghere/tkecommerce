@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/app_shelf.dart';
-import 'package:tkecommerce/blocs/auth/auth_bloc.dart';
 import 'package:tkecommerce/blocs/profile/profile_bloc.dart';
-import 'package:tkecommerce/repositories/auth/auth_repository.dart';
-import 'package:tkecommerce/repositories/user/user_repository.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const routeName = "/profile";
@@ -39,13 +36,9 @@ class ProfileScreen extends StatelessWidget {
             );
           }
           if (state is ProfileLoaded) {
-            return Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  context.read<AuthRepository>().signOut();
-                },
-                child: const Text("Sign Out"),
-              ),
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: _profileActions(context, state),
             );
           }
           if (state is ProfileUnauthenticated) {
@@ -81,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
                         .copyWith(fontSize: 20),
                   ),
                 ),
-                Divider(
+                const Divider(
                   endIndent: 90,
                   indent: 90,
                   color: Colors.white,
@@ -111,6 +104,110 @@ class ProfileScreen extends StatelessWidget {
             return const Text("Something went wrong");
           }
         },
+      ),
+    );
+  }
+
+  Widget _profileActions(BuildContext context, ProfileLoaded state) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            "Customer Information",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomTextFormField(
+            context: context,
+            label: "Email",
+            initialValue: state.user.email,
+            onChanged: (value) {
+              context
+                  .read<ProfileBloc>()
+                  .add(UpdateProfile(state.user.copyWith(email: value)));
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomTextFormField(
+            context: context,
+            label: "Full Name",
+            initialValue: state.user.fullName,
+            onChanged: (value) {
+              context
+                  .read<ProfileBloc>()
+                  .add(UpdateProfile(state.user.copyWith(fullName: value)));
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomTextFormField(
+            context: context,
+            label: "Address",
+            initialValue: state.user.address,
+            onChanged: (value) {
+              context
+                  .read<ProfileBloc>()
+                  .add(UpdateProfile(state.user.copyWith(address: value)));
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomTextFormField(
+            context: context,
+            label: "City",
+            initialValue: state.user.city,
+            onChanged: (value) {
+              context
+                  .read<ProfileBloc>()
+                  .add(UpdateProfile(state.user.copyWith(city: value)));
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomTextFormField(
+            context: context,
+            label: "Country",
+            initialValue: state.user.country,
+            onChanged: (value) {
+              context
+                  .read<ProfileBloc>()
+                  .add(UpdateProfile(state.user.copyWith(country: value)));
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomTextFormField(
+            context: context,
+            label: "Zip Code",
+            initialValue: state.user.zipCode,
+            onChanged: (value) {
+              context
+                  .read<ProfileBloc>()
+                  .add(UpdateProfile(state.user.copyWith(zipCode: value)));
+            },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<AuthRepository>().signOut();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              shape: const RoundedRectangleBorder(),
+              fixedSize: const Size(200, 40),
+            ),
+            child: const Text("Sign Out"),
+          ),
+        ],
       ),
     );
   }

@@ -37,7 +37,7 @@ class CatalogScreen extends StatelessWidget {
                       .toList();
                   return GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: categoryProducts.length,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,

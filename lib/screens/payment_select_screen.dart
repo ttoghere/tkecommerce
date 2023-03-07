@@ -18,7 +18,6 @@ class PaymentSelectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {
           if (state is PaymentLoading) {
@@ -27,84 +26,85 @@ class PaymentSelectScreen extends StatelessWidget {
             );
           }
           if (state is PaymentLoaded) {
-            return Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<PaymentBloc>().add(
-                              const SelectPaymentMethod(
-                                  paymentMethod: PaymentMethod.creditCard));
-                          Navigator.of(context).pop();
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 30,
-                          ),
-                          child: Text("Stripe"),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Platform.isAndroid
-                          ? Column(
-                              children: [
-                                RawGooglePayButton(
-                                  type: GooglePayButtonType.pay,
-                                  onPressed: () {
-                                    context.read<PaymentBloc>().add(
-                                        const SelectPaymentMethod(
-                                            paymentMethod:
-                                                PaymentMethod.googlePay));
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
-                      Platform.isIOS
-                          ? Column(
-                              children: [
-                                RawApplePayButton(
-                                  style: ApplePayButtonStyle.black,
-                                  type: ApplePayButtonType.inStore,
-                                  onPressed: () {
-                                    context.read<PaymentBloc>().add(
-                                        const SelectPaymentMethod(
-                                            paymentMethod:
-                                                PaymentMethod.applePay));
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
-                ),
-              ),
-            );
+            return paymentMethods(context);
           } else {
             return const Center(
               child: Text("Something Went Wrong"),
             );
           }
         },
+      ),
+    );
+  }
+
+  Center paymentMethods(BuildContext context) {
+    return Center(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<PaymentBloc>().add(const SelectPaymentMethod(
+                      paymentMethod: PaymentMethod.creditCard));
+                  Navigator.of(context).pop();
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 30,
+                  ),
+                  child: Text("Stripe"),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Platform.isAndroid
+                  ? Column(
+                      children: [
+                        RawGooglePayButton(
+                          type: GooglePayButtonType.pay,
+                          onPressed: () {
+                            context.read<PaymentBloc>().add(
+                                const SelectPaymentMethod(
+                                    paymentMethod: PaymentMethod.googlePay));
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
+              Platform.isIOS
+                  ? Column(
+                      children: [
+                        RawApplePayButton(
+                          style: ApplePayButtonStyle.black,
+                          type: ApplePayButtonType.inStore,
+                          onPressed: () {
+                            context.read<PaymentBloc>().add(
+                                const SelectPaymentMethod(
+                                    paymentMethod: PaymentMethod.applePay));
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
+            ],
+          ),
+        ),
       ),
     );
   }
