@@ -1,13 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-
-import 'package:tkecommerce/blocs/auth/auth_bloc.dart';
-import 'package:tkecommerce/models/user_model.dart';
-import 'package:tkecommerce/repositories/user/user_repository.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';

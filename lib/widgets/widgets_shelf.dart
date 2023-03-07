@@ -10,3 +10,4 @@ export 'custom_textformfield.dart';
 export 'order_summary.dart';
 export 'google_pay.dart';
 export 'apple_pay.dart';
+export 'search_box.dart';

@@ -127,12 +127,19 @@ class MyApp extends StatelessWidget {
               authRepository: context.read<AuthRepository>(),
             ),
           ),
+          BlocProvider(
+            create: (context) => SearchBloc(
+              productBloc: context.read<ProductBloc>(),
+            )..add(
+                LoadSearch(),
+              ),
+          ),
         ],
         child: MaterialApp(
           theme: ThemeData.dark(),
           debugShowCheckedModeBanner: false,
           title: 'TKECOMMERCE',
-          initialRoute: LoginScreen.routeName,
+          initialRoute: HomeScreen.routeName,
           onGenerateRoute: AppRouter.onGenerateRoute,
         ),
       ),

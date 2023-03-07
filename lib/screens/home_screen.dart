@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tkecommerce/app_shelf.dart';
 
-
 class HomeScreen extends StatefulWidget {
   static const routeName = "/";
   const HomeScreen({super.key});
@@ -31,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             //Category Carousel
             categoryCarouselBloc(),
+            //Search Field
+            const SearchBox(),
             //Section Title
             const SectionTile(
               title: "Recommended",
