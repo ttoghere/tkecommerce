@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tkecommerce/app_shelf.dart';
+import 'package:tkecommerce/blocs/auth/auth_bloc.dart';
+import 'package:tkecommerce/blocs/profile/profile_bloc.dart';
+import 'package:tkecommerce/cubits/sign_in/sign_in_cubit.dart';
+import 'package:tkecommerce/cubits/sign_up/sign_up_cubit.dart';
 import 'package:tkecommerce/firebase_options.dart';
 import 'package:tkecommerce/observer/bloc_observer.dart';
+import 'package:tkecommerce/repositories/auth/auth_repository.dart';
 import 'package:tkecommerce/repositories/local_storage/local_storage_repository.dart';
+import 'package:tkecommerce/repositories/user/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,57 +37,104 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //How to define Blocs
-    return MultiBlocProvider(
+    //The way of defining multiple repositories
+    return MultiRepositoryProvider(
       providers: [
-        //Bloc Defination with Default Event
-        BlocProvider(
-          create: (context) => WishlistBloc(
-            localStorageRepository: LocalStorageRepository(),
-          )..add(
-              StartWishlist(),
-            ),
+        //Default defination of a repository
+        RepositoryProvider(
+          create: (context) => UserRepository(),
         ),
-        BlocProvider(
-          create: (context) => CartBloc()
-            ..add(
-              LoadCart(),
-            ),
-        ),
-        BlocProvider(
-          create: (context) => CategoryBloc(
-            categoryRepository: CategoryRepository(),
-          )..add(
-              LoadCategories(),
-            ),
-        ),
-        BlocProvider(
-          create: (context) => ProductBloc(
-            productRepository: ProductRepository(),
-          )..add(
-              LoadProducts(),
-            ),
-        ),
-        BlocProvider(
-          create: (context) => PaymentBloc()
-            ..add(
-              LoadPaymentMethod(),
-            ),
-        ),
-        BlocProvider(
-          create: (context) => CheckoutBloc(
-            paymentBloc: context.read<PaymentBloc>(),
-            cartBloc: context.read<CartBloc>(),
-            checkoutRepository: CheckoutRepository(),
+        RepositoryProvider(
+          create: (context) => AuthRepository(
+            userRepository: context.read<UserRepository>(),
           ),
         ),
-      ],
-      child: MaterialApp(
-        theme: ThemeData.dark(),
-        debugShowCheckedModeBanner: false,
-        title: 'TKECOMMERCE',
-        initialRoute: HomeScreen.routeName,
-        onGenerateRoute: AppRouter.onGenerateRoute,
+        RepositoryProvider(
+          create: (context) => LocalStorageRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => ProductRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => CategoryRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => CheckoutRepository(),
+        ),
+      ], //How to define Multiple Blocs
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthBloc(
+              authRepository: context.read<AuthRepository>(),
+              userRepository: context.read<UserRepository>(),
+            ),
+          ),
+          //Bloc Defination with Default Event
+          BlocProvider(
+            create: (context) => WishlistBloc(
+              localStorageRepository: context.read<LocalStorageRepository>(),
+            )..add(
+                StartWishlist(),
+              ),
+          ),
+          BlocProvider(
+            create: (context) => CartBloc()
+              ..add(
+                LoadCart(),
+              ),
+          ),
+          BlocProvider(
+            create: (context) => CategoryBloc(
+              categoryRepository: context.read<CategoryRepository>(),
+            )..add(
+                LoadCategories(),
+              ),
+          ),
+          BlocProvider(
+            create: (context) => ProductBloc(
+              productRepository: context.read<ProductRepository>(),
+            )..add(
+                LoadProducts(),
+              ),
+          ),
+          BlocProvider(
+            create: (context) => PaymentBloc()
+              ..add(
+                LoadPaymentMethod(),
+              ),
+          ),
+          BlocProvider(
+            create: (context) => CheckoutBloc(
+              paymentBloc: context.read<PaymentBloc>(),
+              cartBloc: context.read<CartBloc>(),
+              checkoutRepository: context.read<CheckoutRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => ProfileBloc(
+              authBloc: context.read<AuthBloc>(),
+              userRepository: context.read<UserRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => SignInCubit(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => SignUpCubit(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+        ],
+        child: MaterialApp(
+          theme: ThemeData.dark(),
+          debugShowCheckedModeBanner: false,
+          title: 'TKECOMMERCE',
+          initialRoute: LoginScreen.routeName,
+          onGenerateRoute: AppRouter.onGenerateRoute,
+        ),
       ),
     );
   }

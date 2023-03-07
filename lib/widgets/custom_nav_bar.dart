@@ -347,7 +347,9 @@ class HomeNavBar extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.person, color: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(ProfileScreen.routeName);
+          },
         )
       ],
     );
