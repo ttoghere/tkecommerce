@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
@@ -44,18 +47,33 @@ class Product extends Equatable {
       isPopular: snap['isPopular'],
     );
     return product;
+  } //Helps us to fit the collected data in to the product class
+
+  static Product fromJson(Map<String, dynamic> json, [String? id]) {
+    Product product = Product(
+      id: id ?? json["id"],
+      name: json['name'],
+      category: json['category'],
+      imageUrl: json['imageUrl'],
+      price: json['price'],
+      isRecommended: json['isRecommended'],
+      isPopular: json['isPopular'],
+    );
+    return product;
   }
 
   @override
-  List<Object?> get props => [
-        id,
-        name,
-        category,
-        imageUrl,
-        price,
-        isRecommended,
-        isPopular,
-      ];
+  List<Object> get props {
+    return [
+      id,
+      name,
+      category,
+      imageUrl,
+      price,
+      isRecommended,
+      isPopular,
+    ];
+  }
 
   //Static Default Values
   static List<Product> products = const [
@@ -233,4 +251,51 @@ class Product extends Equatable {
         isRecommended: true,
         isPopular: true),
   ];
+
+  Product copyWith({
+    String? id,
+    String? name,
+    String? category,
+    String? imageUrl,
+    double? price,
+    bool? isRecommended,
+    bool? isPopular,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      imageUrl: imageUrl ?? this.imageUrl,
+      price: price ?? this.price,
+      isRecommended: isRecommended ?? this.isRecommended,
+      isPopular: isPopular ?? this.isPopular,
+    );
+  }
+
+  Map<String, dynamic> toDocument() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'category': category,
+      'imageUrl': imageUrl,
+      'price': price,
+      'isRecommended': isRecommended,
+      'isPopular': isPopular,
+    };
+  }
+
+  factory Product.fromMap(Map<String, dynamic> map) {
+    return Product(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      category: map['category'] as String,
+      imageUrl: map['imageUrl'] as String,
+      price: map['price'] as double,
+      isRecommended: map['isRecommended'] as bool,
+      isPopular: map['isPopular'] as bool,
+    );
+  }
+
+  @override
+  bool get stringify => true;
 }

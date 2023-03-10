@@ -372,8 +372,13 @@ class OrderNavBar extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else if (state is CheckoutLoaded) {
-              if (state.paymentMethod == PaymentMethod.creditCard) {
-                return SizedBox(
+              if (state.paymentMethod == PaymentMethod.creditCard &&
+                  state.paymentMethodId != null) {
+                return ElevatedButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Credit Card Payment is unavailible")));
+                  },
                   child: Text(
                     "Pay With Credit Card",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(

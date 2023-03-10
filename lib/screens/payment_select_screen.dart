@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
 import 'package:pay/pay.dart';
 import 'package:tkecommerce/app_shelf.dart';
 
@@ -20,12 +23,12 @@ class PaymentSelectScreen extends StatelessWidget {
     return Scaffold(
       body: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {
-          if (state is PaymentLoading) {
+          if (state.paymentStatus == PaymentStatus.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          if (state is PaymentLoaded) {
+          if (state.paymentStatus == PaymentStatus) {
             return paymentMethods(context);
           } else {
             return const Center(
@@ -38,6 +41,7 @@ class PaymentSelectScreen extends StatelessWidget {
   }
 
   Center paymentMethods(BuildContext context) {
+    stripe.CardFormEditController controller = stripe.CardFormEditController();
     return Center(
       child: SingleChildScrollView(
         child: Padding(
@@ -46,14 +50,52 @@ class PaymentSelectScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                "Add your Credit Card Details",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              stripe.CardFormField(
+                controller: controller,
+                style: stripe.CardFormStyle(
+                  placeholderColor: Colors.white,
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  borderWidth: 5,
+                  borderColor: Colors.red[900],
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
               ElevatedButton(
-                onPressed: () {
-                  context.read<PaymentBloc>().add(const SelectPaymentMethod(
-                      paymentMethod: PaymentMethod.creditCard));
-                  Navigator.of(context).pop();
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.white,
+                ),
+                onPressed: () async {
+                  if (controller.details.complete) {
+                    final stripePaymentMethod = await stripe.Stripe.instance
+                        .createPaymentMethod(stripe.PaymentMethodParams.card(
+                      paymentMethodData: stripe.PaymentMethodData(
+                        billingDetails: stripe.BillingDetails(
+                          email: (context.read<CheckoutBloc>().state
+                                  as CheckoutLoaded)
+                              .user!
+                              .email,
+                        ),
+                      ),
+                    ));
+                    context.read<PaymentBloc>().add(const SelectPaymentMethod(
+                        paymentMethod: PaymentMethod.creditCard));
+                    Navigator.pop(context);
+                  } else {
+                    const SnackBar snackBar =
+                        SnackBar(content: Text("The form is not complete"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(

@@ -18,6 +18,7 @@ class CheckoutLoaded extends CheckoutState {
   final String? total;
   final Checkout checkout;
   final PaymentMethod paymentMethod;
+  final String? paymentMethodId;
 
   CheckoutLoaded({
     this.user,
@@ -26,6 +27,7 @@ class CheckoutLoaded extends CheckoutState {
     this.deliveryFee,
     this.total,
     this.paymentMethod = PaymentMethod.applePay,
+    this.paymentMethodId,
   }) : checkout = Checkout(
           user: user,
           products: products,
@@ -41,6 +43,7 @@ class CheckoutLoaded extends CheckoutState {
         subtotal,
         deliveryFee,
         paymentMethod,
+        paymentMethodId,
         total,
       ];
 }
