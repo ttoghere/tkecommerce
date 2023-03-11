@@ -28,7 +28,7 @@ class PaymentSelectScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          if (state.paymentStatus == PaymentStatus) {
+          if (state.paymentStatus == PaymentStatus.initial) {
             return paymentMethods(context);
           } else {
             return const Center(
@@ -76,26 +76,21 @@ class PaymentSelectScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                 ),
                 onPressed: () async {
-                  if (controller.details.complete) {
-                    final stripePaymentMethod = await stripe.Stripe.instance
-                        .createPaymentMethod(stripe.PaymentMethodParams.card(
-                      paymentMethodData: stripe.PaymentMethodData(
-                        billingDetails: stripe.BillingDetails(
-                          email: (context.read<CheckoutBloc>().state
-                                  as CheckoutLoaded)
-                              .user!
-                              .email,
-                        ),
-                      ),
-                    ));
-                    context.read<PaymentBloc>().add(const SelectPaymentMethod(
-                        paymentMethod: PaymentMethod.creditCard));
-                    Navigator.pop(context);
-                  } else {
-                    const SnackBar snackBar =
-                        SnackBar(content: Text("The form is not complete"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
+                  // if (controller.details.complete) {
+                  //   final stripePaymentMethod = await stripe.Stripe.instance
+                  //       .createPaymentMethod(stripe.PaymentMethodParams.card(
+                  //     paymentMethodData: stripe.PaymentMethodData(
+                  //       billingDetails: stripe.BillingDetails(
+                  //         email: (context.read<CheckoutBloc>().state
+                  //                 as CheckoutLoaded)
+                  //             .user!
+                  //             .email,
+                  //       ),
+                  //     ),
+                  //   ));
+                  context.read<PaymentBloc>().add(const SelectPaymentMethod(
+                      paymentMethod: PaymentMethod.creditCard));
+                  Navigator.pop(context);
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(

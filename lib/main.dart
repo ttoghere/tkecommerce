@@ -10,8 +10,6 @@ import 'package:tkecommerce/cubits/sign_in/sign_in_cubit.dart';
 import 'package:tkecommerce/cubits/sign_up/sign_up_cubit.dart';
 import 'package:tkecommerce/firebase_options.dart';
 import 'package:tkecommerce/observer/bloc_observer.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import '.env';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +17,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Stripe.publishableKey = stripePublishableKey;
-  await Stripe.instance.applySettings();
+  // Stripe.publishableKey = stripePublishableKey;
+  // await Stripe.instance.applySettings();
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
   Bloc.observer = SimpleBlocObserver();

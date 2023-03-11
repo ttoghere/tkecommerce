@@ -8,5 +8,4 @@ export 'profile_screen.dart';
 export 'sign_up_screen.dart';
 export 'checkout_screen.dart';
 export 'wishlist_screen.dart';
-export 'order_confirmation_screen.dart';
 export 'payment_select_screen.dart';

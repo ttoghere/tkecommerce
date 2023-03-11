@@ -20,8 +20,6 @@ class AppRouter {
         return WishlistScreen.route();
       case CheckoutScreen.routeName:
         return CheckoutScreen.route();
-      case OrderConfirmationScreen.routeName:
-        return OrderConfirmationScreen.route();
       case PaymentSelectScreen.routeName:
         return PaymentSelectScreen.route();
       case ProfileScreen.routeName:
