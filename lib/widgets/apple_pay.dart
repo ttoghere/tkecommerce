@@ -1,14 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
-import 'package:tkecommerce/models/product_model.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 class ApplePay extends StatelessWidget {
   final String total;
   final List<Product> products;
-  ApplePay({
+  const ApplePay({
     Key? key,
     required this.total,
     required this.products,
@@ -19,7 +18,7 @@ class ApplePay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _paymentItems = products
+    var paymentItems = products
         .map(
           (e) => PaymentItem(
             amount: e.price.toString(),
@@ -29,14 +28,16 @@ class ApplePay extends StatelessWidget {
           ),
         )
         .toList();
-    _paymentItems.add(PaymentItem(amount: total, label: "Total"));
+    paymentItems.add(PaymentItem(amount: total, label: "Total"));
 
     return SizedBox(
       width: MediaQuery.of(context).size.width - 50,
       child: ApplePayButton(
         onPaymentResult: onApplePayResult,
-        paymentItems: _paymentItems,
+        paymentItems: paymentItems,
         paymentConfigurationAsset: "payment_profile_apple_pay.json",
+        margin: const EdgeInsets.only(top: 10),
+        loadingIndicator: const CircularProgressIndicator(),
       ),
     );
   }

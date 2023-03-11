@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tkecommerce/blocs/blocs_shelf.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 class WishlistScreen extends StatelessWidget {
   static const routeName = "/wishlist";
@@ -44,11 +43,9 @@ class WishlistScreen extends StatelessWidget {
                 return Container(
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: ProductCard(
+                  child: ProductCard.wishlist(
                     isWishlist: true,
                     product: productShorcut[index],
-                    widthFactor: 1.1,
-                    leftPosition: 100,
                   ),
                 );
               },

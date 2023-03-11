@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tkecommerce/models/models.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 class ProductCarousel extends StatelessWidget {
   final List<Product> products;
@@ -21,8 +20,11 @@ class ProductCarousel extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           //Product Card
-          return ProductCard(
-            product: products[index],
+          return Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: ProductCard.catalog(
+              product: products[index],
+            ),
           );
         },
       ),

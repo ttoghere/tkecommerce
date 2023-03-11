@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tkecommerce/config/config_shelf.dart';
-import 'package:tkecommerce/screens/screens_shelf.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
+
+
 //Must add this implemeantation
 //For extracting appbar
 class CustomAppBar extends StatelessWidget implements PreferredSize {
@@ -18,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
     return AppBar(
       //Helps to make Gradient Text
       title: gradientTitle(),
+      centerTitle: true,
       elevation: 0,
       backgroundColor: Colors.transparent,
       actions: [

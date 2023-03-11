@@ -1,9 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:tkecommerce/models/category_model.dart';
-import 'package:tkecommerce/models/product_model.dart';
-import 'package:tkecommerce/screens/screens_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -23,8 +20,6 @@ class AppRouter {
         return WishlistScreen.route();
       case CheckoutScreen.routeName:
         return CheckoutScreen.route();
-      case OrderConfirmationScreen.routeName:
-        return OrderConfirmationScreen.route();
       case PaymentSelectScreen.routeName:
         return PaymentSelectScreen.route();
       case ProfileScreen.routeName:

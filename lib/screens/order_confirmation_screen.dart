@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import 'package:tkecommerce/models/product_model.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 class OrderConfirmationScreen extends StatelessWidget {
   static const routeName = "/orderconfirmation";
@@ -84,13 +82,6 @@ class OrderConfirmationScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "Order Code: #123-a12a",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
                 ],
               ),
             ),
@@ -118,12 +109,12 @@ class OrderConfirmationScreen extends StatelessWidget {
               height: 5,
             ),
             ListView.builder(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: Product.products.length,
               itemBuilder: (context, index) {
-                return OrderSummaryProductCard(
+                return ProductCard.summary(
                   quantity: index,
                   product: Product.products[index],
                 );

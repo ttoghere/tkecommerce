@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tkecommerce/blocs/blocs_shelf.dart';
-import 'package:tkecommerce/screens/screens_shelf.dart';
-import 'package:tkecommerce/widgets/widgets_shelf.dart';
+import 'package:tkecommerce/app_shelf.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = "/cartscreen";
@@ -31,6 +29,7 @@ class CartScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,22 +59,16 @@ class CartScreen extends StatelessWidget {
   }
 
   SizedBox cartScreenProductList(CartLoaded state) {
+    Map cart = state.cart.productQuantity(state.cart.products);
     return SizedBox(
       height: 300,
       child: ListView.builder(
           shrinkWrap: true,
-          itemCount:
-              state.cart.productQuantity(state.cart.products).keys.length,
+          itemCount: cart.keys.length,
           itemBuilder: (context, index) {
-            return CartProductCard(
-              product: state.cart
-                  .productQuantity(state.cart.products)
-                  .keys
-                  .elementAt(index),
-              quantity: state.cart
-                  .productQuantity(state.cart.products)
-                  .values
-                  .elementAt(index),
+            return ProductCard.cart(
+              product: cart.keys.elementAt(index),
+              quantity: cart.values.elementAt(index),
             );
           }),
     );

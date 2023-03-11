@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:tkecommerce/models/models.dart';
-import 'package:tkecommerce/repositories/repositories.dart';
+import 'package:tkecommerce/app_shelf.dart';
+
 
 part 'product_event.dart';
 part 'product_state.dart';
